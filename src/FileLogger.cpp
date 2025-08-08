@@ -26,24 +26,3 @@ void FileLogger::setLogLevel(LogLevel level) {
     currentLogLevel_ = level;
 }
 
-std::string FileLogger::LogLevelToString(LogLevel level) const {
-    switch (level) {
-        case LogLevel::Info: return "INFO";
-        case LogLevel::Warning: return "WARNING";
-        case LogLevel::Error: return "ERROR";
-        default: return "UNKNOWN";
-    }
-}
-
-
-std::string FileLogger::getCurrentTime() const {
-    auto now = std::time(nullptr);
-    std::tm tm;
-    localtime_r(&now, &tm);
-
-    std::ostringstream oss;
-    oss << std::put_time(&tm, "%d-%m-%Y %H:%M:%S");
-    return oss.str();
-}
-
-

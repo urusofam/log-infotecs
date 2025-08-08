@@ -10,9 +10,6 @@ class FileLogger : public ILogger {
     LogLevel currentLogLevel_;
     std::mutex mutex_;
 
-    std::string LogLevelToString(LogLevel level) const;
-    std::string getCurrentTime() const;
-
 public:
     explicit FileLogger(const std::string &fileName, LogLevel level = LogLevel::Info);
     ~FileLogger() override;
