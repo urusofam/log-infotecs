@@ -10,6 +10,7 @@ enum class LogLevel {
     Info,
 };
 
+// Приведение уровня логирования к строке
 inline std::string LogLevelToString(LogLevel level) {
     switch (level) {
         case LogLevel::Info: return "INFO";
@@ -19,7 +20,7 @@ inline std::string LogLevelToString(LogLevel level) {
     }
 }
 
-
+// Получаем текущее время
 inline std::string getCurrentTime() {
     auto now = std::time(nullptr);
     std::tm tm;
@@ -29,7 +30,6 @@ inline std::string getCurrentTime() {
     oss << std::put_time(&tm, "%d-%m-%Y %H:%M:%S");
     return oss.str();
 }
-
 
 class ILogger {
 public:
