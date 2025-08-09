@@ -11,11 +11,11 @@ class SocketLogger : public ILogger {
     LogLevel currentLogLevel_;
     std::mutex mutex_;
 
-    bool connectToServer();
 public:
     SocketLogger(const std::string& serverIP, int serverPort, LogLevel logLevel);
     ~SocketLogger() override;
 
     void log(const std::string& message, LogLevel level) override;
     void setLogLevel(LogLevel level) override;
+    bool connectToServer();
 };

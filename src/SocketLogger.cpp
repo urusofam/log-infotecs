@@ -36,7 +36,7 @@ bool SocketLogger::connectToServer() {
     }
 
     // Подключение
-    if (connect(socket_, reinterpret_cast<struct sockaddr*>(&serverAddress), sizeof(serverAddress)) < 0) {
+    if (connect(socket_, reinterpret_cast<sockaddr*>(&serverAddress), sizeof(serverAddress)) < 0) {
         std::cerr << "Не удалось присоединиться к серверу" << std::endl;
         return false;
     }

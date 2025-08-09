@@ -1,22 +1,40 @@
 #include "LoggerFactory.h"
+
+#include <iostream>
+
 #include "SocketLogger.h"
 
 #include <sstream>
 
 // Функция создания логера через фабрику
-std::unique_ptr<ILogger> createLogger(LoggerType type, const std::string &fileName, LogLevel level) {
+std::unique_ptr<ILogger> createLogger(LoggerType type, const std::string &target, LogLevel level) {
     // Если файловый логер
     if (type == LoggerType::FileLogger) {
-        return std::make_unique<FileLogger>(fileName, level);
+        return std::make_unique<FileLogger>(target, level);
     }
-
     // Если сокет логер
-    std::istringstream ss(fileName);
-    std::string ip;
-    int port;
-    char colon;
-    if (ss >> ip >> colon >> port && colon == ':') {
-        return std::make_unique<SocketLogger>(ip, port, level);
+    if (type == LoggerType::SocketLogger) {
+        // Находим :
+        size_t colon_pos = target.find(':');
+        if (colon_pos == std::string::npos) {
+            return nullptr;
+        }
+
+        // Получаем ip и порт
+        std::string ip = target.substr(0, colon_pos);
+        int port;
+        try {
+            port = std::stoi(target.substr(colon_pos + 1));
+        } catch (...) {
+            return nullptr;
+        }
+
+        // Создаем сокет логер
+        auto loger = std::make_unique<SocketLogger>(ip, port, level);
+        if (!loger->connectToServer()) {
+            return nullptr;
+        }
+        return loger;
     }
 
     // Если несуществующий
