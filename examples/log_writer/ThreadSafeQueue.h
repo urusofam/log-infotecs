@@ -5,7 +5,7 @@
 #include <queue>
 #include <string>
 
-#include "ILogger.h"
+#include "../../include/ILogger.h"
 
 struct Log {
     std::string message;
