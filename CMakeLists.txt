@@ -6,18 +6,31 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-include_directories(include)
-
 set(LOGGER_SOURCES
         src/FileLogger.cpp
         src/SocketLogger.cpp
         src/LoggerFactory.cpp
-        src/ThreadSafeQueue.cpp
 )
 
-add_library(logger ${LOGGER_SOURCES})
-target_include_directories(logger PUBLIC include)
-target_link_libraries(logger PUBLIC pthread)
+add_library(loggerLib ${LOGGER_SOURCES})
+target_include_directories(loggerLib PUBLIC include)
+target_link_libraries(loggerLib PUBLIC pthread)
 
-add_executable(log_writer examples/log_writer.cpp)
-target_link_libraries(log_writer PRIVATE logger)
+SET(LOG_WRITER_DIR examples/log_writer)
+
+add_executable(log_writer ${LOG_WRITER_DIR}/log_writer.cpp ${LOG_WRITER_DIR}/ThreadSafeQueue.cpp)
+target_include_directories(log_writer PRIVATE examples/log_writer)
+target_link_libraries(log_writer PRIVATE loggerLib)
+
+SET(LOG_STATS_SOURCES
+        examples/log_stats/LogServer.cpp
+        examples/log_stats/LogStatsCollector.cpp
+)
+set(LOG_STATS_DIR examples/log_stats)
+
+add_library(logStatsLib ${LOG_STATS_SOURCES})
+target_include_directories(logStatsLib PRIVATE ${LOG_STATS_DIR})
+target_link_libraries(logStatsLib PUBLIC loggerLib)
+
+add_executable(log_stats ${LOG_STATS_DIR}/log_stats.cpp)
+target_link_libraries(log_stats PRIVATE logStatsLib)
