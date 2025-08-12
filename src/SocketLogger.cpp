@@ -1,12 +1,13 @@
 #include "SocketLogger.h"
 
 #include <iostream>
+#include <utility>
 #include <unistd.h>
 #include <arpa/inet.h>
 
 // Конструктор для сокет логера
-SocketLogger::SocketLogger(const std::string &serverIP, int serverPort, LogLevel logLevel) :
-    socket_(-1), serverIP_(serverIP), serverPort_(serverPort), currentLogLevel_(logLevel) {}
+SocketLogger::SocketLogger(std::string serverIP, int serverPort, LogLevel logLevel) :
+    socket_(-1), serverIP_(std::move(serverIP)), serverPort_(serverPort), currentLogLevel_(logLevel) {}
 
 // Деструктор для сокет логера
 SocketLogger::~SocketLogger() {
