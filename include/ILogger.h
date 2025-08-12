@@ -23,7 +23,7 @@ inline std::string LogLevelToString(LogLevel level) {
 // Получаем текущее время
 inline std::string getCurrentTime() {
     auto now = std::time(nullptr);
-    std::tm tm;
+    std::tm tm{};
     localtime_r(&now, &tm);
 
     std::ostringstream oss;
@@ -35,7 +35,7 @@ class ILogger {
 public:
     virtual ~ILogger() = default;
 
-    virtual void log(const std::string &message, LogLevel level = LogLevel::Info) = 0;
+    virtual void log(const std::string &message, LogLevel level) = 0;
 
     virtual void setLogLevel(LogLevel level) = 0;
 };

@@ -14,6 +14,6 @@ public:
     explicit FileLogger(const std::string &fileName, LogLevel level = LogLevel::Info);
     ~FileLogger() override;
 
-    void log(const std::string &message, LogLevel level = LogLevel::Info) override;
+    void log(const std::string &message, LogLevel level) override;
     void setLogLevel(LogLevel level) override;
 };
