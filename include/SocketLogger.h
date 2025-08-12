@@ -12,7 +12,7 @@ class SocketLogger : public ILogger {
     std::mutex mutex_;
 
 public:
-    SocketLogger(const std::string& serverIP, int serverPort, LogLevel logLevel);
+    explicit SocketLogger(std::string serverIP, int serverPort, LogLevel logLevel = LogLevel::Info);
     ~SocketLogger() override;
 
     void log(const std::string& message, LogLevel level) override;
