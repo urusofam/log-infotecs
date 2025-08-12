@@ -93,13 +93,13 @@ int main(int argc, char *argv[]) {
         LogLevel lvl = level;
         if (input.rfind("[error]", 0) == 0) {
             lvl = LogLevel::Error;
-            input = input.substr(7);
+            input = input.substr(8);
         } else if (input.rfind("[warning]", 0) == 0) {
             lvl = LogLevel::Warning;
-            input = input.substr(9);
+            input = input.substr(10);
         } else if (input.rfind("[info]", 0) == 0) {
             lvl = LogLevel::Info;
-            input = input.substr(6);
+            input = input.substr(7);
         }
 
         queue.push({input, lvl});
